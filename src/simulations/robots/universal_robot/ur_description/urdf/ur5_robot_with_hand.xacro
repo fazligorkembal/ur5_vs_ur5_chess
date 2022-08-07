@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="https://ros.org/wiki/xacro" name="ur5">
+
+  
+  <xacro:arg name="hand" default="true" />
+  <xacro:arg name="prefix" default=""/>
+
+  <xacro:include filename="$(find ur_description)/urdf/ur5.urdf.xacro" />
+  
+  
+  <xacro:ur5_robot prefix="$(arg prefix)" joint_limited="true"/>
+  
+  
+
+  <xacro:if value="$(arg hand)">
+      <xacro:include filename="$(find franka_description)/robots/hand.xacro"/>
+      <xacro:hand arm_id="$(arg prefix)" rpy="0 0 0" connected_to="$(arg prefix)tool0" />
+  </xacro:if>
+
+  <!-- define the ur5's position and orientation in the world coordinate system -->
+  <link name="world" />
+  <joint name="world_joint" type="fixed">
+    <parent link="world" />
+    <child link="$(arg prefix)base_link" /> <!-- TODO: check base_link name of robot -->
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+  </joint>
+</robot>

@@ -1,0 +1,37 @@
+generic_hw_control_loop:
+  loop_hz: 50
+  cycle_time_error_threshold: 0.01
+
+hardware_interface:
+  joints:
+    - shoulder_pan_joint
+    - shoulder_lift_joint
+    - elbow_joint
+    - wrist_1_joint
+    - wrist_2_joint
+    - wrist_3_joint
+    - ur5_finger_joint1
+    - ur5_finger_joint2
+
+
+controller_list:
+ - name: ur5_robot_controller
+   action_ns: follow_joint_trajectory
+   type: FollowJointTrajectory
+   default: true
+   joints:
+    - shoulder_pan_joint
+    - shoulder_lift_joint
+    - elbow_joint
+    - wrist_1_joint
+    - wrist_2_joint
+    - wrist_3_joint
+    
+ - name: panda_gripper_controller
+   action_ns: gripper_action
+   type: GripperCommand
+   default: true
+   parallel: true
+   joints:
+     - ur5_finger_joint1
+     - ur5_finger_joint2

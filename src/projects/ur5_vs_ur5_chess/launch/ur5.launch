@@ -1,0 +1,44 @@
+<launch>
+
+    <group ns="robot_white">
+        <rosparam file="$(find ur5_controller)/config/ur5_controller.yaml" command="load"/>    
+
+        <node name="omniverse_converter" pkg="ur5_controller" type="omniverse_to_ros" output="screen" />
+        <node name="ur5_robot_control" pkg="ur5_controller" type="ur5_hw_main" output="screen" />
+
+        <include file="$(find ur5_with_gripper_moveit_config)/launch/planning_context.launch">
+            <arg name="load_robot_description" value="true"/>
+        </include>
+
+        <node name="ros_control_controller_manager" pkg="controller_manager" type="spawner" respawn="false" output="screen"
+                args="ur5_robot_controller panda_gripper_controller" />
+
+        <include file="$(find ur5_with_gripper_moveit_config)/launch/move_group.launch">
+            <arg name="publish_monitored_planning_scene" value="true"/>
+            <arg name="moveit_controller_manager" value="simple"/>
+        </include>
+    </group>
+
+    <group ns="robot_black">
+        <rosparam file="$(find ur5_controller)/config/ur5_controller.yaml" command="load"/>    
+
+        <node name="omniverse_converter" pkg="ur5_controller" type="omniverse_to_ros" output="screen" />
+        <node name="ur5_robot_control" pkg="ur5_controller" type="ur5_hw_main" output="screen" />
+
+        <include file="$(find ur5_with_gripper_moveit_config)/launch/planning_context.launch">
+            <arg name="load_robot_description" value="true"/>
+        </include>
+
+        <node name="ros_control_controller_manager" pkg="controller_manager" type="spawner" respawn="false" output="screen"
+                args="ur5_robot_controller panda_gripper_controller" />
+
+        <include file="$(find ur5_with_gripper_moveit_config)/launch/move_group.launch">
+            <arg name="publish_monitored_planning_scene" value="true"/>
+            <arg name="moveit_controller_manager" value="simple"/>
+        </include>
+
+    </group>
+
+    
+
+</launch>

@@ -1,0 +1,11 @@
+<launch>
+
+    <group ns="robot_white">
+        <node name="ur5_mover" pkg="ur5_vs_ur5_chess" type="ur5_state_machine.py" output="screen" />
+    </group>
+
+    <group ns="robot_black">
+        <node name="ur5_mover" pkg="ur5_vs_ur5_chess" type="ur5_state_machine.py" output="screen" />
+    </group>
+
+</launch>
